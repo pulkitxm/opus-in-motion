@@ -10,16 +10,35 @@ const FOCAL = 1400;
 const COLORS = [C.bone, C.orange, C.pink, C.lime, C.blue];
 
 const rand = random(2026);
+const gauss = () => Math.sqrt(-2 * Math.log(1 - rand())) * Math.cos(2 * Math.PI * rand());
+
 const STARS = Array.from({ length: COUNT }, (_, i) => {
-  const r = 50 + Math.pow(rand(), 0.62) * 860;
+  const core = i % 7 === 0;
+  const r = core ? 20 + Math.abs(gauss()) * 110 : 90 + Math.pow(rand(), 0.62) * 820;
   const arm = i % 3;
   const colorRoll = rand();
   const band = r / 910;
-  const color = colorRoll < 0.28 ? C.bone : band < 0.35 ? (colorRoll < 0.7 ? C.orange : C.pink) : band < 0.7 ? (colorRoll < 0.6 ? C.pink : C.orange) : colorRoll < 0.6 ? C.blue : C.lime;
+  const color = core
+    ? colorRoll < 0.6
+      ? C.bone
+      : C.orange
+    : colorRoll < 0.24
+      ? C.bone
+      : band < 0.35
+        ? colorRoll < 0.7
+          ? C.orange
+          : C.pink
+        : band < 0.7
+          ? colorRoll < 0.6
+            ? C.pink
+            : C.orange
+          : colorRoll < 0.6
+            ? C.blue
+            : C.lime;
   return {
     r,
-    theta: (arm * Math.PI * 2) / 3 + r * 0.0062 + (rand() - 0.5) * 0.7,
-    height: (rand() - 0.5) * 70 * (1 - band * 0.8),
+    theta: core ? rand() * Math.PI * 2 : (arm * Math.PI * 2) / 3 + r * 0.0062 + (rand() - 0.5) * (0.35 + band * 0.9),
+    height: core ? gauss() * 45 : (rand() - 0.5) * 70 * (1 - band * 0.8),
     speed: 1.7 * (260 / (r + 160)),
     delay: rand() * 0.4,
     swirl: (rand() - 0.5) * 220,
@@ -74,7 +93,7 @@ export const Particles = () => {
     ctx.globalCompositeOperation = "lighter";
 
     const bang = ease.outExpo(progress(b, 24, 24.8));
-    const tilt = lerp(1.25, 1.02, ease.inOutCubic(progress(b, 24, 26.2)));
+    const tilt = lerp(0.42, 1.0, ease.inOutCubic(progress(b, 24, 26.4)));
     const spin = (b - 24) * 0.55;
     const zoom = lerp(0.85, 1.1, ease.inOutCubic(progress(b, 24, 26.5)));
     const pointCount = points.length / 2;

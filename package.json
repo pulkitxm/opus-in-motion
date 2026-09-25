@@ -5,13 +5,14 @@
   "scripts": {
     "studio": "remotion studio src/index.ts",
     "music": "node scripts/music.ts",
-    "render": "remotion render src/index.ts Showreel out/showreel.mp4",
+    "render": "node scripts/music.ts && remotion render src/index.ts Showreel out/showreel.mp4",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@react-three/fiber": "^9.8.1",
     "@remotion/cli": "^4.0.529",
     "@remotion/google-fonts": "^4.0.529",
+    "@remotion/motion-blur": "^4.0.529",
     "@remotion/noise": "^4.0.529",
     "@remotion/three": "^4.0.529",
     "react": "^19.3.0",

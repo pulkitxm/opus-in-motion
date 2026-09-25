@@ -29,14 +29,13 @@ const FOREGROUNDS = [C.bone, C.bone, C.orange, C.orange, C.ink, C.lime, C.pink, 
 const rand = random(8);
 const pick = <T,>(list: T[]) => list[Math.floor(rand() * list.length)];
 
-const TILES = Array.from({ length: COLS * ROWS }, (_, i) => {
-  const col = i % COLS;
-  const row = Math.floor(i / COLS);
+const HALF_COLS = COLS / 2;
+const HALF_ROWS = Math.ceil(ROWS / 2);
+
+const BASE_TILES = Array.from({ length: HALF_COLS * HALF_ROWS }, () => {
   const bg = pick(BACKGROUNDS);
   const fg = pick(FOREGROUNDS.filter((c) => c !== bg));
   return {
-    col,
-    row,
     bg,
     fg,
     shape: SHAPES[pick(SHAPE_KEYS)],
@@ -46,8 +45,17 @@ const TILES = Array.from({ length: COLS * ROWS }, (_, i) => {
   };
 });
 
+const TILES = Array.from({ length: COLS * ROWS }, (_, i) => {
+  const col = i % COLS;
+  const row = Math.floor(i / COLS);
+  const mirrorX = col >= HALF_COLS;
+  const mirrorY = row >= HALF_ROWS;
+  const base = BASE_TILES[(mirrorY ? ROWS - 1 - row : row) * HALF_COLS + (mirrorX ? COLS - 1 - col : col)];
+  return { ...base, col, row, sx: mirrorX ? -1 : 1, sy: mirrorY ? -1 : 1 };
+});
+
 const ROTATIONS = [
-  { at: 6, origin: [8, 4] },
+  { at: 6, origin: [7.5, 4] },
   { at: 7, origin: [0, 0] },
   { at: 8, origin: [7.5, 4] },
   { at: 9, origin: [15, 0] },
@@ -100,7 +108,7 @@ export const Grid = () => {
               width: TILE,
               height: TILE,
               backgroundColor: mix(baseBg, C.blue, morph),
-              transform: `perspective(700px) rotateY(${flipAngle}deg) rotate(${angle * (1 - morph)}deg) scale(${breathe})`,
+              transform: `perspective(700px) rotateY(${flipAngle}deg) rotate(${tile.sx * tile.sy * angle * (1 - morph)}deg) scale(${breathe * tile.sx}, ${breathe * tile.sy})`,
             }}
           >
             <div
