@@ -107,11 +107,12 @@ export const Liquid = () => {
             <stop offset="0.55" stopColor={mix(C.bone, C.pink, tint)} />
             <stop offset="1" stopColor={mix(C.bone, C.lime, tint)} />
           </linearGradient>
-          <radialGradient id="sphere-shade" cx={960 - 90} cy={540 - 110} r={SPHERE_RADIUS * 1.45} gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#FFE9DD" />
-            <stop offset="0.35" stopColor={C.orange} />
-            <stop offset="0.8" stopColor="#8A1C0A" />
-            <stop offset="1" stopColor="#2A0A08" />
+          <radialGradient id="sphere-shade" cx={960 - 95} cy={540 - 120} r={SPHERE_RADIUS * 1.5} gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#FFF3EA" />
+            <stop offset="0.1" stopColor="#FFB08E" />
+            <stop offset="0.42" stopColor="#FF7A55" />
+            <stop offset="0.78" stopColor="#F4582F" />
+            <stop offset="1" stopColor="#B8361A" />
           </radialGradient>
           <filter id="liquid" x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
             <feGaussianBlur in="SourceGraphic" stdDeviation={16} result="blur" />

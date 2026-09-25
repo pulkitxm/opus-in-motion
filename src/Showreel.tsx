@@ -9,6 +9,9 @@ import { KineticType, diveAt } from "./scenes/KineticType";
 import { Grid } from "./scenes/Grid";
 import { Liquid } from "./scenes/Liquid";
 import { Orb3D } from "./scenes/Orb3D";
+import { Montage } from "./scenes/Montage";
+import { Particles } from "./scenes/Particles";
+import { EndCard } from "./scenes/EndCard";
 
 const shakeAt = (frame: number) => {
   const b = frame / FRAMES_PER_BEAT;
@@ -46,6 +49,9 @@ export const Showreel = () => {
         {b >= 4 && b < 8 && <KineticType />}
         {b >= 12 && b < 16 && <Liquid />}
         {b >= 16 && b < 20 && <Orb3D />}
+        {b >= 20 && b < 24 && <Montage />}
+        {b >= 24 && b < 28 && <Particles />}
+        {b >= 28 && <EndCard />}
       </AbsoluteFill>
       <Hud />
       <Grain />

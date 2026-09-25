@@ -1,21 +1,10 @@
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { C, fonts } from "../theme";
 import { FPS, FRAMES_PER_BEAT, TOTAL_BEATS, chapterAt } from "../timeline";
-import { ease, hash, progress } from "../lib/motion";
+import { ease, progress } from "../lib/motion";
+import { scramble } from "../lib/text";
 
-const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/#*+";
 const pad = (n: number) => String(n).padStart(2, "0");
-
-const scramble = (text: string, ageFrames: number, frame: number, perChar = 1.2) =>
-  text
-    .split("")
-    .map((ch, i) => {
-      if (ch === " ") return " ";
-      if (ageFrames >= i * perChar + 6) return ch;
-      if (ageFrames < i * perChar * 0.5) return "";
-      return GLYPHS[Math.floor(hash(frame * 13.1 + i * 7.7) * GLYPHS.length)];
-    })
-    .join("");
 
 export const Hud = () => {
   const frame = useCurrentFrame();

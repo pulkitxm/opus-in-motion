@@ -67,7 +67,7 @@ const Blob = () => {
   useLayoutEffect(() => {
     const t = b - 16;
     const amp = 0.22 * ease.outExpo(progress(b, 16, 16.45)) + 0.16 * pulse(b, 17, 0.3) + 0.35 * ease.inCubic(progress(b, 17.4, 18));
-    const ripple = 0.07 * (pulse(b, 16, 0.3) + pulse(b, 17, 0.3));
+    const ripple = 0.07 * (pulse(b, 16, 0.3) * progress(b, 16, 16.08) + pulse(b, 17, 0.3));
     const pos = geometry.attributes.position.array as Float32Array;
     for (let i = 0; i < pos.length; i += 3) {
       const x = base[i] / SPHERE;
