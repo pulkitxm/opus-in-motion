@@ -7,6 +7,8 @@ import { Grain } from "./components/Grain";
 import { Bounce } from "./scenes/Bounce";
 import { KineticType, diveAt } from "./scenes/KineticType";
 import { Grid } from "./scenes/Grid";
+import { Liquid } from "./scenes/Liquid";
+import { Orb3D } from "./scenes/Orb3D";
 
 const shakeAt = (frame: number) => {
   const b = frame / FRAMES_PER_BEAT;
@@ -42,6 +44,8 @@ export const Showreel = () => {
           </AbsoluteFill>
         )}
         {b >= 4 && b < 8 && <KineticType />}
+        {b >= 12 && b < 16 && <Liquid />}
+        {b >= 16 && b < 20 && <Orb3D />}
       </AbsoluteFill>
       <Hud />
       <Grain />
